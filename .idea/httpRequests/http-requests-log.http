@@ -1,0 +1,150 @@
+GET http://localhost:3000/eth/block/3
+Accept: application/json
+
+<> 2023-02-01T215409.200.json
+
+###
+
+POST http://localhost:3000/eth-listener/load-block?id=3
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/eth-listener/load-block?id=3
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+<> 2023-02-01T214946.404.json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+<> 2023-02-01T214704.404.json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+<> 2023-02-01T214616.404.json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+<> 2023-02-01T214415.404.json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+<> 2023-02-01T213049.500.json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+<> 2023-02-01T212855.500.json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/listener/load-block?id=3
+Content-Type: application/json
+
+<> 2023-02-01T210159.500.json
+
+###
+
+POST http://localhost:3000/listener/loadBlock?id=3
+Content-Type: application/json
+
+<> 2023-02-01T210043.404.json
+
+###
+
+POST http://localhost:3000/listener/loadBlock?blockNumber=3
+Content-Type: application/json
+
+<> 2023-02-01T210035.404.json
+
+###
+
+POST http://localhost:3000/listener/loadBlock/3
+Content-Type: application/json
+
+<> 2023-02-01T210019.404.json
+
+###
+
+GET http://localhost:3000/cats
+
+<> 2023-01-31T123309.200.json
+
+###
+
+POST http://localhost:3000/cats
+Content-Type: application/json
+
+{
+  "name": "meo",
+  "age": 12,
+  "breed": "smooth",
+  "tags": ["one", "two"]
+}
+
+###
+
+POST http://localhost:3000/cats
+Content-Type: application/json
+
+{
+  "id": 999,
+  "value": "content"
+}
+
+<> 2023-01-31T123159.500.json
+
+###
+
+GET http://localhost:3000/cats
+
+<> 2023-01-31T123111.200.json
+
+###
+
+GET http://127.0.0.1:7545
+
+<> 2023-01-31T104205.400.txt
+
+###
+
+GET http://localhost:3000
+
+<> 2023-01-30T130717.200.html
+
+###
+

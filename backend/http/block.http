@@ -1,0 +1,6 @@
+POST http://localhost:3000/eth-listener/load-block?id=3
+Content-Type: application/json
+
+### GET block
+GET http://localhost:3000/eth/block/3
+Accept: application/json
