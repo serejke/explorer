@@ -25,6 +25,10 @@ import {
     EthTransactionDtoToJSON,
 } from '../models';
 
+export interface FindLatestBlocksRequest {
+    limit: number;
+}
+
 export interface FindOneBlockRequest {
     id: string;
 }
@@ -40,6 +44,22 @@ export interface FindOneTransactionRequest {
  * @interface EthApiInterface
  */
 export interface EthApiInterface {
+    /**
+     * 
+     * @summary 
+     * @param {number} limit 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthApiInterface
+     */
+    findLatestBlocksRaw(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthBlockDto>>>;
+
+    /**
+     * 
+     * 
+     */
+    findLatestBlocks(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthBlockDto>>;
+
     /**
      * 
      * @summary 
@@ -78,6 +98,42 @@ export interface EthApiInterface {
  * 
  */
 export class EthApi extends runtime.BaseAPI implements EthApiInterface {
+
+    /**
+     * 
+     * 
+     */
+    async findLatestBlocksRaw(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthBlockDto>>> {
+        if (requestParameters.limit === null || requestParameters.limit === undefined) {
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling findLatestBlocks.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/eth/blocks`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EthBlockDtoFromJSON));
+    }
+
+    /**
+     * 
+     * 
+     */
+    async findLatestBlocks(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthBlockDto>> {
+        const response = await this.findLatestBlocksRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * 

@@ -5,8 +5,6 @@ import { EthService } from '../eth/eth.service';
 @Injectable()
 export class EthLoaderService {
 
-  private readonly logger: Logger = new Logger(EthLoaderService.name);
-
   constructor(
     private readonly ethWeb3Service: EthWeb3Service,
     private readonly ethService: EthService
@@ -15,11 +13,9 @@ export class EthLoaderService {
 
   async loadBlock(blockNumber: number): Promise<void> {
     const { block, transactions } = await this.ethWeb3Service.loadBlock(blockNumber);
-    this.logger.log('Block', JSON.stringify(block, null, 2));
     await this.ethService.createBlock(block);
 
     for (const transaction of transactions) {
-      this.logger.log(`Transaction ${transaction.transactionIndex}: ${transaction.hash}`, JSON.stringify(transaction, null, 2));
       await this.ethService.createTransaction(transaction);
     }
   }

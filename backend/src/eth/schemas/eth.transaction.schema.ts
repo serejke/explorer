@@ -12,6 +12,9 @@ export class EthTransaction {
   hash: string;
 
   @Prop()
+  blockHash: string;
+
+  @Prop()
   transactionIndex: BigIntString;
 
   @Prop()

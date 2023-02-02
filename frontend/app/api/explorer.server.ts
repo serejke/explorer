@@ -4,7 +4,13 @@ const configuration = new Configuration({
   basePath: 'http://localhost:3000',
 });
 
-export const explorerApi = new EthApi(configuration);
+const explorerApi = new EthApi(configuration);
+
+export async function fetchBlocks(limit: number): Promise<EthBlockDto[]> {
+  return await explorerApi.findLatestBlocks({
+    limit
+  });
+}
 
 export async function fetchBlock(id: string): Promise<EthBlockDto> {
   try {

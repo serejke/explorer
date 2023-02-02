@@ -1,6 +1,6 @@
 import { json, LoaderArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
-import { useCatch, useLoaderData } from '@remix-run/react';
+import { Link, useCatch, useLoaderData } from '@remix-run/react';
 import { fetchTransaction } from '~/api/explorer.server';
 
 export async function loader({ params }: LoaderArgs) {
@@ -13,6 +13,12 @@ export default function TransactionPage() {
   const { transaction } = useLoaderData<typeof loader>();
   return (
     <div>
+      <div>
+        <p>Block hash</p>
+        <Link to={`../block/${transaction.blockHash}`}>
+          <div>{transaction.blockHash}</div>
+        </Link>
+      </div>
       <div>
         <p>Transaction number</p>
         <div>{transaction.transactionIndex}</div>

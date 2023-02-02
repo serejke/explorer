@@ -23,7 +23,9 @@ export default function BlockPage() {
       </div>
       <div>
         <p>Parent block hash</p>
-        <div>{block.parentHash}</div>
+        <Link to={`../${block.parentHash}`} relative='path'>
+          <div>{block.parentHash}</div>
+        </Link>
       </div>
       <div>
         <p>Gas used</p>

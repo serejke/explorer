@@ -1,50 +1,28 @@
-GET http://localhost:3000/eth/block/33
+GET http://localhost:3000/eth/block/3
 Accept: application/json
 
-<> 2023-02-02T161638.404.json
+<> 2023-02-02T210423.200.json
 
 ###
 
-GET http://localhost:3000/eth/block/33
+GET http://localhost:3000/eth/transaction/0xd93596ae5f20bc0ae18e60c321fd395afdc9c9f654ee245452b5939167f69f84
 Accept: application/json
 
-<> 2023-02-02T161514.404.json
-
-###
-
-GET http://localhost:3000/eth/block/33
-Accept: application/json
-
-<> 2023-02-02T161507.404.json
+<> 2023-02-02T210418.200.json
 
 ###
 
 GET http://localhost:3000/eth/block/3
 Accept: application/json
 
-<> 2023-02-02T161504.200.json
-
-###
-
-POST http://localhost:3000/eth-listener/load-block?id=11
-Content-Type: application/json
-
-###
-
-POST http://localhost:3000/eth-listener/load-block?id=11
-Content-Type: application/json
-
-###
-
-POST http://localhost:3000/eth-listener/load-block?id=11
-Content-Type: application/json
+<> 2023-02-02T210414.200.json
 
 ###
 
 GET http://localhost:3000/eth/block/3
 Accept: application/json
 
-<> 2023-02-01T215409.200.json
+<> 2023-02-02T210346.200.json
 
 ###
 
@@ -53,141 +31,59 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/eth-listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/3
+Accept: application/json
+
+<> 2023-02-02T205736.200.json
 
 ###
 
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67180174c607fba6fddeb6b1
+Accept: application/json
 
-<> 2023-02-01T214946.404.json
-
-###
-
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
-
-<> 2023-02-01T214704.404.json
+<> 2023-02-02T205734.200.json
 
 ###
 
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67180174c607fba6fddeb6b1
+Accept: application/json
 
-<> 2023-02-01T214616.404.json
-
-###
-
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
-
-<> 2023-02-01T214415.404.json
+<> 2023-02-02T205719.404.json
 
 ###
 
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67180174c607fba6fddeb6b1
+Accept: application/json
+
+<> 2023-02-02T205717.404.json
 
 ###
 
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67180174c607fba6fddeb6b1
+Accept: application/json
 
-<> 2023-02-01T213049.500.json
-
-###
-
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
-
-<> 2023-02-01T212855.500.json
+<> 2023-02-02T205644.404.json
 
 ###
 
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67180174c607fba6fddeb6b1
+Accept: application/json
+
+<> 2023-02-02T205609.404.json
 
 ###
 
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67180174c607fba6fddeb6b1
+Accept: application/json
+
+<> 2023-02-02T205607.404.json
 
 ###
 
-POST http://localhost:3000/listener/load-block?id=3
-Content-Type: application/json
+GET http://localhost:3000/eth/block/3
+Accept: application/json
 
-<> 2023-02-01T210159.500.json
-
-###
-
-POST http://localhost:3000/listener/loadBlock?id=3
-Content-Type: application/json
-
-<> 2023-02-01T210043.404.json
-
-###
-
-POST http://localhost:3000/listener/loadBlock?blockNumber=3
-Content-Type: application/json
-
-<> 2023-02-01T210035.404.json
-
-###
-
-POST http://localhost:3000/listener/loadBlock/3
-Content-Type: application/json
-
-<> 2023-02-01T210019.404.json
-
-###
-
-GET http://localhost:3000/cats
-
-<> 2023-01-31T123309.200.json
-
-###
-
-POST http://localhost:3000/cats
-Content-Type: application/json
-
-{
-  "name": "meo",
-  "age": 12,
-  "breed": "smooth",
-  "tags": ["one", "two"]
-}
-
-###
-
-POST http://localhost:3000/cats
-Content-Type: application/json
-
-{
-  "id": 999,
-  "value": "content"
-}
-
-<> 2023-01-31T123159.500.json
-
-###
-
-GET http://localhost:3000/cats
-
-<> 2023-01-31T123111.200.json
-
-###
-
-GET http://127.0.0.1:7545
-
-<> 2023-01-31T104205.400.txt
-
-###
-
-GET http://localhost:3000
-
-<> 2023-01-30T130717.200.html
+<> 2023-02-02T205546.200.json
 
 ###
 
