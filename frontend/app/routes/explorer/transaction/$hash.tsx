@@ -1,22 +1,12 @@
 import { json, LoaderArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { useCatch, useLoaderData } from '@remix-run/react';
-import { explorerApi } from '~/api/explorer.server';
-import { ResponseError } from 'explorer-client';
+import { fetchTransaction } from '~/api/explorer.server';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.hash, "Transaction hash is not found");
-  try {
-    const transaction = await explorerApi.findOneTransaction({
-      hash: params.hash
-    });
-    return json({ transaction });
-  } catch (e) {
-    if (e instanceof Error && e.name === ResponseError.name) {
-      throw new Response(params.hash, { status: 404 });
-    }
-    throw e;
-  }
+  const transaction = await fetchTransaction(params.hash);
+  return json({ transaction });
 }
 
 export default function TransactionPage() {

@@ -26,8 +26,14 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Block having the given ID is not found"
           }
-        }
+        },
+        "tags": [
+          "eth"
+        ]
       }
     },
     "/eth/transaction/{hash}": {
@@ -55,8 +61,14 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Transaction having the given hash is not found"
           }
-        }
+        },
+        "tags": [
+          "eth"
+        ]
       }
     },
     "/eth-listener/load-block": {
@@ -78,7 +90,10 @@
           "201": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "eth-listener"
+        ]
       }
     }
   },

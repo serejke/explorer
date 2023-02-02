@@ -1,22 +1,12 @@
 import { json, LoaderArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { Link, useCatch, useLoaderData } from '@remix-run/react';
-import { explorerApi } from '~/api/explorer.server';
-import { ResponseError } from 'explorer-client';
+import { fetchBlock } from '~/api/explorer.server';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.id, "Block ID is not found");
-  try {
-    const block = await explorerApi.findOneBlock({
-      id: params.id
-    });
-    return json({ block });
-  } catch (e) {
-    if (e instanceof Error && e.name === ResponseError.name) {
-      throw new Response(params.id, { status: 404 });
-    }
-    throw e;
-  }
+  const block = await fetchBlock(params.id);
+  return json({ block });
 }
 
 export default function BlockPage() {

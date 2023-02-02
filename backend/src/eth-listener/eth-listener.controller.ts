@@ -1,6 +1,8 @@
 import { Controller, Param, Post } from '@nestjs/common';
 import { EthLoaderService } from './eth-loader.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('eth-listener')
 @Controller('eth-listener')
 export class EthListenerController {
   constructor(
