@@ -1,5 +1,5 @@
 {
-  "name": "frontend-0972",
+  "name": "explorer",
   "private": true,
   "sideEffects": false,
   "scripts": {
@@ -85,8 +85,5 @@
   },
   "engines": {
     "node": ">=14"
-  },
-  "prisma": {
-    "seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"
   }
 }

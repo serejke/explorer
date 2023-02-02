@@ -6,7 +6,7 @@ const configuration = new Configuration({
 
 export const explorerApi = new EthApi(configuration);
 
-export async function fetchBlock(id: string): EthBlockDto {
+export async function fetchBlock(id: string): Promise<EthBlockDto> {
   try {
     return await explorerApi.findOneBlock({
       id
@@ -19,7 +19,7 @@ export async function fetchBlock(id: string): EthBlockDto {
   }
 }
 
-export async function fetchTransaction(hash: string): EthTransactionDto {
+export async function fetchTransaction(hash: string): Promise<EthTransactionDto> {
   try {
     return await explorerApi.findOneTransaction({
       hash
