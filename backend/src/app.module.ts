@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EthListenerModule } from './eth-listener/eth-listener.module';
@@ -23,8 +21,6 @@ import { EthModule } from './eth/eth.module';
     EthListenerModule,
     ConfigModule.forRoot()
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {
 }

@@ -1,0 +1,171 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/eth/block/{id}": {
+      "get": {
+        "operationId": "findOneBlock",
+        "summary": "",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EthBlockDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eth/transaction/{hash}": {
+      "get": {
+        "operationId": "findOneTransaction",
+        "summary": "",
+        "description": "",
+        "parameters": [
+          {
+            "name": "hash",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EthTransactionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eth-listener/load-block": {
+      "post": {
+        "operationId": "loadBlock",
+        "summary": "",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Explorer",
+    "description": "Explorer API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "explorer",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "EthBlockDto": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "parentHash": {
+            "type": "string"
+          },
+          "gasUsed": {
+            "type": "string"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "number",
+          "hash",
+          "parentHash",
+          "gasUsed",
+          "transactions"
+        ]
+      },
+      "EthTransactionDto": {
+        "type": "object",
+        "properties": {
+          "hash": {
+            "type": "string"
+          },
+          "transactionIndex": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "gas": {
+            "type": "string"
+          },
+          "gasPrice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "hash",
+          "transactionIndex",
+          "from",
+          "to",
+          "value",
+          "data",
+          "gas",
+          "gasPrice"
+        ]
+      }
+    }
+  }
+}

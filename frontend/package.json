@@ -20,7 +20,8 @@
     "pretest:e2e:run": "npm run build",
     "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
     "typecheck": "tsc && tsc -p cypress",
-    "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
+    "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run",
+    "generate-openapi-client": "openapi-generator-cli generate -i docs/openapi.json -g typescript-fetch -o generated-sources/openapi --additional-properties=npmName=explorer-client,supportsES6=true,npmVersion=6.9.0,withInterfaces=true"
   },
   "prettier": {},
   "eslintIgnore": [
@@ -35,6 +36,7 @@
     "@remix-run/serve": "^1.11.1",
     "@remix-run/server-runtime": "^1.11.1",
     "bcryptjs": "^2.4.3",
+    "explorer-client": "file:generated-sources/openapi",
     "isbot": "^3.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -42,6 +44,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@remix-run/dev": "^1.11.1",
     "@remix-run/eslint-config": "^1.11.1",
     "@testing-library/cypress": "^8.0.7",
