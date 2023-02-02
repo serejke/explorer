@@ -32,7 +32,7 @@ export default function BlockPage() {
       <div>
         <p>Transactions</p>
         <div>{block.transactions.map((transaction) => (
-          <Link key={transaction} to={`/explorer/transaction/${transaction}`}>
+          <Link key={transaction} to={`../transaction/${transaction}`}>
             {transaction}
           </Link>
         ))}</div>
