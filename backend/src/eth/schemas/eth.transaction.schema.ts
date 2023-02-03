@@ -11,7 +11,9 @@ export class EthTransaction {
   @Prop()
   _id: string;
 
-  @Prop()
+  @Prop({
+    index: true
+  })
   hash: string;
 
   @Prop()

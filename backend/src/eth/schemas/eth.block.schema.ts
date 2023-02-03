@@ -11,10 +11,14 @@ export class EthBlock {
   @Prop()
   _id: string;
 
-  @Prop()
+  @Prop({
+    index: true
+  })
   number: BigIntString;
 
-  @Prop()
+  @Prop({
+    index: true
+  })
   hash: string;
 
   @Prop()
