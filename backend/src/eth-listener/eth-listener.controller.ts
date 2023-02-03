@@ -1,4 +1,4 @@
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Post, Query } from '@nestjs/common';
 import { EthLoaderService } from './eth-loader.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -11,7 +11,7 @@ export class EthListenerController {
   }
 
   @Post('/load-block')
-  async loadBlock(@Param('id') blockNumber: number) {
+  async loadBlock(@Query('id') blockNumber: number) {
     await this.ethLoaderService.loadBlock(blockNumber);
   }
 }

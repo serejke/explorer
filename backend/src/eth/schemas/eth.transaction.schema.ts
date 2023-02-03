@@ -9,6 +9,9 @@ export type EthTransactionDocument = HydratedDocument<EthTransaction>;
 })
 export class EthTransaction {
   @Prop()
+  _id: string;
+
+  @Prop()
   hash: string;
 
   @Prop()

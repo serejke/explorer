@@ -12,22 +12,30 @@ export class EthService {
   ) {
   }
 
-  async createBlock(ethBlock: EthBlock): Promise<EthBlock> {
-    return await this.ethBlockModel.create(ethBlock);
+  async createBlock(ethBlock: EthBlock) {
+    await this.ethBlockModel.updateOne(
+      { _id: ethBlock._id },
+      { $setOnInsert: ethBlock },
+      { upsert: true }
+    );
   }
 
-  async createTransaction(ethTransaction: EthTransaction): Promise<EthTransaction> {
-    return await this.ethTransactionModel.create(ethTransaction);
+  async createTransaction(ethTransaction: EthTransaction) {
+    await this.ethTransactionModel.updateOne(
+      { _id: ethTransaction.hash },
+      { $setOnInsert: ethTransaction },
+      { upsert: true }
+    );
   }
 
   async findLatestBlocks(count: number): Promise<EthBlock[]> {
-    const options: QueryOptions = {
-      limit: count,
-      sort: {
+    return await this.ethBlockModel
+      .find()
+      .limit(count)
+      .sort({
         'number': -1
-      }
-    };
-    return await this.ethBlockModel.find({}, undefined, options).exec();
+      })
+      .exec();
   }
 
   async findOneBlock(id: string): Promise<EthBlock> {

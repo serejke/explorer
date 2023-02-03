@@ -9,6 +9,9 @@ export type EthBlockDocument = HydratedDocument<EthBlock>;
 })
 export class EthBlock {
   @Prop()
+  _id: string;
+
+  @Prop()
   number: BigIntString;
 
   @Prop()
