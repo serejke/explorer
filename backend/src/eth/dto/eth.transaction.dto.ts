@@ -3,7 +3,9 @@ export class EthTransactionDto {
 
   blockHash: string;
 
-  transactionIndex: string;
+  blockNumber: number;
+
+  transactionIndex: number;
 
   from: string;
 

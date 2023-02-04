@@ -3,6 +3,7 @@ import invariant from 'tiny-invariant';
 import { Link, useCatch, useLoaderData } from '@remix-run/react';
 import { fetchBlock } from '~/api/explorer.server';
 import { Header } from '~/components/Header';
+import { DateTime } from 'luxon';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.id, "Block ID is not found");
@@ -12,6 +13,8 @@ export async function loader({ params }: LoaderArgs) {
   }
   return json({ block });
 }
+
+const DATE_TIME_FORMAT = 'MMM-dd-yyyy HH:mm:ss';
 
 export default function BlockPage() {
   const { block } = useLoaderData<typeof loader>();
@@ -27,29 +30,35 @@ export default function BlockPage() {
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Block hash</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.hash}</dd>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">{block.hash}</dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Timestamp</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.timestamp}</dd>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {DateTime.fromMillis(block.timestamp).toFormat(DATE_TIME_FORMAT)} ({DateTime.fromMillis(block.timestamp).toRelative()})
+              </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Parent block hash</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
                 <Link to={`../${block.parentHash}`} relative='path'>
                   <div>{block.parentHash}</div>
                 </Link>
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Gas used</dt>
+              <dt className="text-sm font-medium text-gray-500">Gas</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.gasUsed}</dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Transactions</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 <div>{block.transactions.map((transaction) => (
-                  <Link key={transaction} to={`../transaction/${transaction}`}>
+                  <Link
+                    key={transaction}
+                    to={`../transaction/${transaction}`}
+                    className="font-mono"
+                  >
                     {transaction}
                   </Link>
                 ))}</div>

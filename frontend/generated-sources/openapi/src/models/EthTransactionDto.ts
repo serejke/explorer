@@ -33,10 +33,16 @@ export interface EthTransactionDto {
     blockHash: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof EthTransactionDto
      */
-    transactionIndex: string;
+    blockNumber: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EthTransactionDto
+     */
+    transactionIndex: number;
     /**
      * 
      * @type {string}
@@ -82,6 +88,7 @@ export function instanceOfEthTransactionDto(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "hash" in value;
     isInstance = isInstance && "blockHash" in value;
+    isInstance = isInstance && "blockNumber" in value;
     isInstance = isInstance && "transactionIndex" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
@@ -105,6 +112,7 @@ export function EthTransactionDtoFromJSONTyped(json: any, ignoreDiscriminator: b
         
         'hash': json['hash'],
         'blockHash': json['blockHash'],
+        'blockNumber': json['blockNumber'],
         'transactionIndex': json['transactionIndex'],
         'from': json['from'],
         'to': json['to'],
@@ -126,6 +134,7 @@ export function EthTransactionDtoToJSON(value?: EthTransactionDto | null): any {
         
         'hash': value.hash,
         'blockHash': value.blockHash,
+        'blockNumber': value.blockNumber,
         'transactionIndex': value.transactionIndex,
         'from': value.from,
         'to': value.to,

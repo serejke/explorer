@@ -32,8 +32,9 @@ export class EthWeb3Service {
       const ethTransaction: EthTransaction = {
         _id: transaction.hash,
         hash: transaction.hash,
+        blockNumber: parseInt(block.number.toString()),
         blockHash: block.hash,
-        transactionIndex: transaction.transactionIndex.toString(),
+        transactionIndex: parseInt(transaction.transactionIndex.toString()),
         from: transaction.from,
         to: transaction.to,
         value: transaction.value.toString(),

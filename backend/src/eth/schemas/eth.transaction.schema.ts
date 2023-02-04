@@ -17,10 +17,13 @@ export class EthTransaction {
   hash: string;
 
   @Prop()
+  blockNumber: number;
+
+  @Prop()
   blockHash: string;
 
   @Prop()
-  transactionIndex: BigIntString;
+  transactionIndex: number;
 
   @Prop()
   from: string;
