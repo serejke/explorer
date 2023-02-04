@@ -6,6 +6,9 @@ import { fetchTransaction } from '~/api/explorer.server';
 export async function loader({ params }: LoaderArgs) {
   invariant(params.hash, "Transaction hash is not found");
   const transaction = await fetchTransaction(params.hash);
+  if (transaction === 'notFound') {
+    throw new Response(params.hash, { status: 404 });
+  }
   return json({ transaction });
 }
 

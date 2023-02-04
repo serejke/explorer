@@ -6,6 +6,9 @@ import { fetchBlock } from '~/api/explorer.server';
 export async function loader({ params }: LoaderArgs) {
   invariant(params.id, "Block ID is not found");
   const block = await fetchBlock(params.id);
+  if (block === 'notFound') {
+    throw new Response(params.id, { status: 404 });
+  }
   return json({ block });
 }
 
