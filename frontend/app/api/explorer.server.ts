@@ -1,4 +1,11 @@
-import { Configuration, EthApi, EthBlockDto, EthTransactionDto, ResponseError } from 'explorer-client';
+import {
+  BlockchainStatusDto,
+  Configuration,
+  EthApi,
+  EthBlockDto,
+  EthTransactionDto,
+  ResponseError
+} from 'explorer-client';
 import { SearchResult } from '~/types/search-result';
 
 const configuration = new Configuration({
@@ -7,10 +14,15 @@ const configuration = new Configuration({
 
 const explorerApi = new EthApi(configuration);
 
-export async function fetchBlocks(limit: number): Promise<EthBlockDto[]> {
-  return await explorerApi.findLatestBlocks({
-    limit
-  });
+export async function fetchBlockchainStatus(): Promise<BlockchainStatusDto> {
+  return await explorerApi.getBlockchainStatus();
+}
+
+export async function fetchBlocks(
+  from: number,
+  limit: number
+): Promise<EthBlockDto[]> {
+  return await explorerApi.findBlocks({ from, limit });
 }
 
 export async function fetchBlock(id: string): Promise<EthBlockDto | 'notFound'> {

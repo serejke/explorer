@@ -1,7 +1,7 @@
 import { BigIntString } from '../schemas/bigIntString';
 
 export class EthBlockDto {
-  number: BigIntString;
+  number: number;
 
   hash: string;
 

@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface EthBlockDto {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof EthBlockDto
      */
-    number: string;
+    number: number;
     /**
      * 
      * @type {string}

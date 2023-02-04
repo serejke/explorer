@@ -1,20 +1,33 @@
-import { Controller, Get, NotFoundException, Param, Query } from '@nestjs/common';
-import { EthService, LATEST_BLOCKS_LIMIT } from './eth.service';
+import { BadRequestException, Controller, Get, NotFoundException, Param, Query } from '@nestjs/common';
+import { EthService, BLOCKS_RANGE_LIMIT } from './eth.service';
 import { EthBlockDto } from './dto/eth-block.dto';
 import { EthTransactionDto } from './dto/eth.transaction.dto';
 import { ApiNotFoundResponse, ApiTags } from '@nestjs/swagger';
-import { limitWith } from '../utils';
+import { BlockchainStatusDto } from './dto/blockchain-status.dto';
 
 @ApiTags('eth')
 @Controller('eth')
 export class EthController {
-  constructor(private readonly ethModelService: EthService) {}
+  constructor(private readonly ethModelService: EthService) {
+  }
+
+  @Get('/status')
+  async getBlockchainStatus(): Promise<BlockchainStatusDto> {
+    return await this.ethModelService.getBlockchainStatus();
+  }
 
   @Get('/blocks')
-  @ApiNotFoundResponse({ description: `Latest blocks, limited to ` })
-  async findLatestBlocks(@Query('limit') limit?: number): Promise<EthBlockDto[]> {
-    const count = limitWith(limit, LATEST_BLOCKS_LIMIT);
-    const blocks = await this.ethModelService.findLatestBlocks(count);
+  @ApiNotFoundResponse(
+    { description: `Get 'limit' (<${BLOCKS_RANGE_LIMIT}) blocks starting from block #'from'` }
+  )
+  async findBlocks(
+    @Query('from') from: number,
+    @Query('limit') limit: number
+  ): Promise<EthBlockDto[]> {
+    if (limit > BLOCKS_RANGE_LIMIT) {
+      throw new BadRequestException();
+    }
+    const blocks = await this.ethModelService.findBlocksFrom(from, limit);
     if (!blocks) {
       throw new NotFoundException();
     }

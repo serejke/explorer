@@ -14,7 +14,7 @@ export class EthBlock {
   @Prop({
     index: true
   })
-  number: BigIntString;
+  number: number;
 
   @Prop({
     index: true

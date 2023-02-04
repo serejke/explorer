@@ -15,17 +15,21 @@
 
 import * as runtime from '../runtime';
 import type {
+  BlockchainStatusDto,
   EthBlockDto,
   EthTransactionDto,
 } from '../models';
 import {
+    BlockchainStatusDtoFromJSON,
+    BlockchainStatusDtoToJSON,
     EthBlockDtoFromJSON,
     EthBlockDtoToJSON,
     EthTransactionDtoFromJSON,
     EthTransactionDtoToJSON,
 } from '../models';
 
-export interface FindLatestBlocksRequest {
+export interface FindBlocksRequest {
+    from: number;
     limit: number;
 }
 
@@ -47,18 +51,19 @@ export interface EthApiInterface {
     /**
      * 
      * @summary 
+     * @param {number} from 
      * @param {number} limit 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EthApiInterface
      */
-    findLatestBlocksRaw(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthBlockDto>>>;
+    findBlocksRaw(requestParameters: FindBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthBlockDto>>>;
 
     /**
      * 
      * 
      */
-    findLatestBlocks(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthBlockDto>>;
+    findBlocks(requestParameters: FindBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthBlockDto>>;
 
     /**
      * 
@@ -92,6 +97,21 @@ export interface EthApiInterface {
      */
     findOneTransaction(requestParameters: FindOneTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EthTransactionDto>;
 
+    /**
+     * 
+     * @summary 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthApiInterface
+     */
+    getBlockchainStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainStatusDto>>;
+
+    /**
+     * 
+     * 
+     */
+    getBlockchainStatus(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainStatusDto>;
+
 }
 
 /**
@@ -103,12 +123,20 @@ export class EthApi extends runtime.BaseAPI implements EthApiInterface {
      * 
      * 
      */
-    async findLatestBlocksRaw(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthBlockDto>>> {
+    async findBlocksRaw(requestParameters: FindBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthBlockDto>>> {
+        if (requestParameters.from === null || requestParameters.from === undefined) {
+            throw new runtime.RequiredError('from','Required parameter requestParameters.from was null or undefined when calling findBlocks.');
+        }
+
         if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling findLatestBlocks.');
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling findBlocks.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.from !== undefined) {
+            queryParameters['from'] = requestParameters.from;
+        }
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
@@ -130,8 +158,8 @@ export class EthApi extends runtime.BaseAPI implements EthApiInterface {
      * 
      * 
      */
-    async findLatestBlocks(requestParameters: FindLatestBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthBlockDto>> {
-        const response = await this.findLatestBlocksRaw(requestParameters, initOverrides);
+    async findBlocks(requestParameters: FindBlocksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthBlockDto>> {
+        const response = await this.findBlocksRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -196,6 +224,34 @@ export class EthApi extends runtime.BaseAPI implements EthApiInterface {
      */
     async findOneTransaction(requestParameters: FindOneTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EthTransactionDto> {
         const response = await this.findOneTransactionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * 
+     * 
+     */
+    async getBlockchainStatusRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainStatusDto>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/eth/status`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => BlockchainStatusDtoFromJSON(jsonValue));
+    }
+
+    /**
+     * 
+     * 
+     */
+    async getBlockchainStatus(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainStatusDto> {
+        const response = await this.getBlockchainStatusRaw(initOverrides);
         return await response.value();
     }
 

@@ -46,7 +46,7 @@ export class EthWeb3Service {
 
     const ethBlock: EthBlock = {
       _id: block.hash,
-      number: block.number.toString(),
+      number: parseInt(block.number.toString()),
       hash: block.hash,
       timestamp: parseInt(block.timestamp.toString()) * 1000,
       parentHash: block.parentHash,

@@ -1,5 +1,5 @@
 ### POST load block into the explorer DB
-POST http://localhost:3000/eth-listener/load-block?id=7
+POST http://localhost:3000/eth-listener/load-block?id=1
 Content-Type: application/json
 
 ### GET block by number
@@ -11,7 +11,11 @@ GET http://localhost:3000/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67
 Accept: application/json
 
 ### GET blocks
-GET http://localhost:3000/eth/blocks
+GET http://localhost:3000/eth/blocks?from=5&limit=10
+Accept: application/json
+
+### Get status
+GET http://localhost:3000/eth/status
 Accept: application/json
 
 ### GET transaction by hash
