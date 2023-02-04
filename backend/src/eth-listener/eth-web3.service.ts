@@ -36,7 +36,7 @@ export class EthWeb3Service {
         blockHash: block.hash,
         transactionIndex: parseInt(transaction.transactionIndex.toString()),
         from: transaction.from,
-        to: transaction.to,
+        to: transaction.to ? transaction.to : '0x0000000000000000000000000000000000000000',
         value: transaction.value.toString(),
         data: transaction.data,
         gas: transaction.gas.toString(),

@@ -41,6 +41,10 @@ export interface FindOneTransactionRequest {
     hash: string;
 }
 
+export interface FindTransactionsOfBlockRequest {
+    hash: string;
+}
+
 /**
  * EthApi - interface
  * 
@@ -96,6 +100,22 @@ export interface EthApiInterface {
      * 
      */
     findOneTransaction(requestParameters: FindOneTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EthTransactionDto>;
+
+    /**
+     * 
+     * @summary 
+     * @param {string} hash 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthApiInterface
+     */
+    findTransactionsOfBlockRaw(requestParameters: FindTransactionsOfBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthTransactionDto>>>;
+
+    /**
+     * 
+     * 
+     */
+    findTransactionsOfBlock(requestParameters: FindTransactionsOfBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthTransactionDto>>;
 
     /**
      * 
@@ -224,6 +244,38 @@ export class EthApi extends runtime.BaseAPI implements EthApiInterface {
      */
     async findOneTransaction(requestParameters: FindOneTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EthTransactionDto> {
         const response = await this.findOneTransactionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * 
+     * 
+     */
+    async findTransactionsOfBlockRaw(requestParameters: FindTransactionsOfBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EthTransactionDto>>> {
+        if (requestParameters.hash === null || requestParameters.hash === undefined) {
+            throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling findTransactionsOfBlock.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/eth/transaction/byBlock/{hash}`.replace(`{${"hash"}}`, encodeURIComponent(String(requestParameters.hash))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EthTransactionDtoFromJSON));
+    }
+
+    /**
+     * 
+     * 
+     */
+    async findTransactionsOfBlock(requestParameters: FindTransactionsOfBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EthTransactionDto>> {
+        const response = await this.findTransactionsOfBlockRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

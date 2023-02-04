@@ -1,9 +1,12 @@
 import { json, LoaderArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { Link, useCatch, useLoaderData } from '@remix-run/react';
-import { fetchBlock } from '~/api/explorer.server';
+import { fetchBlock, fetchTransactionsByBlockHash } from '~/api/explorer.server';
 import { Header } from '~/components/Header';
 import { DateTime } from 'luxon';
+import classNames from 'classnames';
+import { truncateHash } from '~/utils/truncate-hash';
+import { formatEth } from '~/utils/format-eth';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.id, "Block ID is not found");
@@ -11,13 +14,17 @@ export async function loader({ params }: LoaderArgs) {
   if (block === 'notFound') {
     throw new Response(params.id, { status: 404 });
   }
-  return json({ block });
+
+  const blockHash = block.hash;
+  const transactions = await fetchTransactionsByBlockHash(blockHash);
+
+  return json({ block, transactions });
 }
 
 const DATE_TIME_FORMAT = 'MMM-dd-yyyy HH:mm:ss';
 
 export default function BlockPage() {
-  const { block } = useLoaderData<typeof loader>();
+  const { block, transactions } = useLoaderData<typeof loader>();
   return (
     <div className="mt-4">
       <Header content='Block'/>
@@ -50,21 +57,35 @@ export default function BlockPage() {
               <dt className="text-sm font-medium text-gray-500">Gas</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.gasUsed}</dd>
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Transactions</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                <div>{block.transactions.map((transaction) => (
-                  <Link
-                    key={transaction}
-                    to={`../transaction/${transaction}`}
-                    className="font-mono"
-                  >
-                    {transaction}
-                  </Link>
-                ))}</div>
-              </dd>
-            </div>
           </dl>
+        </div>
+      </div>
+      <Header content='Transactions'/>
+      <div className="mx-auto max-w-7xl flex flex-col justify-between">
+        <div className="border border-grey-200 rounded-lg">
+          {transactions.map((transaction, index) => (
+            <Link
+              key={transaction.hash}
+              to={`/transaction/${transaction.hash}`}
+              className={classNames('px-6', 'rounded-lg', 'py-4', 'flex', 'flex-row', 'justify-between', {
+                'bg-white': index % 2 === 0,
+                'bg-gray-50': index % 2 !== 1,
+              })}
+            >
+              <div className="w-1/5">
+                #{transaction.transactionIndex + 1}
+              </div>
+              <div className="text-sm font-mono w-1/5">
+                {truncateHash(transaction.hash)}
+              </div>
+              <div className="text-sm font-mono w-2/5">
+                {truncateHash(transaction.from)} {'->'} {truncateHash(transaction.to)}
+              </div>
+              <div className="w-1/5">
+                {formatEth(transaction.value)}
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

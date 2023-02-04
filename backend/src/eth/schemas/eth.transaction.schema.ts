@@ -19,7 +19,9 @@ export class EthTransaction {
   @Prop()
   blockNumber: number;
 
-  @Prop()
+  @Prop({
+    index: true
+  })
   blockHash: string;
 
   @Prop()

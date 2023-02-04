@@ -51,6 +51,12 @@ export async function fetchTransaction(hash: string): Promise<EthTransactionDto 
   }
 }
 
+export async function fetchTransactionsByBlockHash(blockHash: string): Promise<EthTransactionDto[]> {
+  return await explorerApi.findTransactionsOfBlock({
+    hash: blockHash
+  });
+}
+
 export function isValidSha256Hash(string: string): boolean {
   const regexExp = /^0x[a-f0-9]{64}$/gi;
   return regexExp.test(string);

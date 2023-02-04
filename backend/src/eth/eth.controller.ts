@@ -53,4 +53,10 @@ export class EthController {
     }
     return transaction;
   }
+
+  @Get('/transaction/byBlock/:hash')
+  @ApiNotFoundResponse({ description: 'Transactions of block having the given hash' })
+  async findTransactionsOfBlock(@Param('hash') blockHash: string): Promise<EthTransactionDto[]> {
+    return await this.ethModelService.findTransactionsByBlockHash(blockHash);
+  }
 }

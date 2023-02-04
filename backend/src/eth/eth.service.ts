@@ -67,6 +67,15 @@ export class EthService {
   async findOneTransaction(transactionHash: string): Promise<EthTransaction> {
     return this.ethTransactionModel.findOne({ _id: transactionHash }).exec();
   }
+
+  async findTransactionsByBlockHash(blockHash: string): Promise<EthTransaction[]> {
+    return this.ethTransactionModel
+      .find({ blockHash: blockHash })
+      .sort({
+        'transactionIndex': 1
+      })
+      .exec();
+  }
 }
 
 export const BLOCKS_RANGE_LIMIT = 50;

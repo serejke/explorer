@@ -3,6 +3,7 @@ import invariant from 'tiny-invariant';
 import { Link, useCatch, useLoaderData } from '@remix-run/react';
 import { fetchTransaction } from '~/api/explorer.server';
 import { Header } from '~/components/Header';
+import { formatEth } from '~/utils/format-eth';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.hash, "Transaction hash is not found");
@@ -42,22 +43,32 @@ export default function TransactionPage() {
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Index in the block</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
+                <div>{transaction.transactionIndex + 1}</div>
+              </dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">From</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">{transaction.from}</dd>
             </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">To</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
                 {transaction.to ? transaction.to : '0x0000000000000000000000000000000000000000'}
               </dd>
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Gas</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{transaction.gas}</dd>
             </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Gas price</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{transaction.gasPrice}</dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Value</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{formatEth(transaction.value)}</dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Data</dt>
