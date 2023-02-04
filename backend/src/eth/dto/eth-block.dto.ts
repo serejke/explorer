@@ -7,6 +7,8 @@ export class EthBlockDto {
 
   parentHash: string;
 
+  timestamp: number;
+
   gasUsed: BigIntString;
 
   transactions: string[];

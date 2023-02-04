@@ -3,8 +3,8 @@ import { json, redirect } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import { Header } from '~/components/Header';
 import { searchTransactionOrBlock } from '~/api/explorer.server';
+import NavBar from '~/components/NavBar';
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -41,21 +41,21 @@ export async function loader({ }: LoaderArgs) {
 
 export default function App() {
   return (
-    <html lang="en" className="h-full">
-      <head title="Explorer">
-        <Meta />
-        <Links />
-        <title>Explorer</title>
-      </head>
-      <body className="h-full">
-        <Header/>
-        <main>
-          <Outlet />
-        </main>
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
+    <html lang="en" className="h-full bg-gray-100">
+    <head title="Explorer">
+      <Meta />
+      <Links />
+      <title>Explorer</title>
+    </head>
+    <body className="h-full">
+    <NavBar />
+    <main>
+      <Outlet />
+    </main>
+    <ScrollRestoration />
+    <Scripts />
+    <LiveReload />
+    </body>
     </html>
   );
 }

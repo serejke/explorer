@@ -2,6 +2,7 @@ import { json, LoaderArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { Link, useCatch, useLoaderData } from '@remix-run/react';
 import { fetchBlock } from '~/api/explorer.server';
+import { Header } from '~/components/Header';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.id, "Block ID is not found");
@@ -15,32 +16,47 @@ export async function loader({ params }: LoaderArgs) {
 export default function BlockPage() {
   const { block } = useLoaderData<typeof loader>();
   return (
-    <div>
-      <div>
-        <p>Block number</p>
-        <div>{block.number}</div>
-      </div>
-      <div>
-        <p>Block hash</p>
-        <div>{block.hash}</div>
-      </div>
-      <div>
-        <p>Parent block hash</p>
-        <Link to={`../${block.parentHash}`} relative='path'>
-          <div>{block.parentHash}</div>
-        </Link>
-      </div>
-      <div>
-        <p>Gas used</p>
-        <div>{block.gasUsed}</div>
-      </div>
-      <div>
-        <p>Transactions</p>
-        <div>{block.transactions.map((transaction) => (
-          <Link key={transaction} to={`../transaction/${transaction}`}>
-            {transaction}
-          </Link>
-        ))}</div>
+    <div className="mt-4">
+      <Header content='Block'/>
+      <div className="mx-auto max-w-7xl overflow-hidden bg-white shadow sm:rounded-lg">
+        <div className="border-t border-gray-200">
+          <dl>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Block number</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.number}</dd>
+            </div>
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Block hash</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.hash}</dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Timestamp</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.timestamp}</dd>
+            </div>
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Parent block hash</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                <Link to={`../${block.parentHash}`} relative='path'>
+                  <div>{block.parentHash}</div>
+                </Link>
+              </dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Gas used</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{block.gasUsed}</dd>
+            </div>
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Transactions</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                <div>{block.transactions.map((transaction) => (
+                  <Link key={transaction} to={`../transaction/${transaction}`}>
+                    {transaction}
+                  </Link>
+                ))}</div>
+              </dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </div>
   )

@@ -39,6 +39,12 @@ export interface EthBlockDto {
     parentHash: string;
     /**
      * 
+     * @type {number}
+     * @memberof EthBlockDto
+     */
+    timestamp: number;
+    /**
+     * 
      * @type {string}
      * @memberof EthBlockDto
      */
@@ -59,6 +65,7 @@ export function instanceOfEthBlockDto(value: object): boolean {
     isInstance = isInstance && "number" in value;
     isInstance = isInstance && "hash" in value;
     isInstance = isInstance && "parentHash" in value;
+    isInstance = isInstance && "timestamp" in value;
     isInstance = isInstance && "gasUsed" in value;
     isInstance = isInstance && "transactions" in value;
 
@@ -78,6 +85,7 @@ export function EthBlockDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'number': json['number'],
         'hash': json['hash'],
         'parentHash': json['parentHash'],
+        'timestamp': json['timestamp'],
         'gasUsed': json['gasUsed'],
         'transactions': json['transactions'],
     };
@@ -95,6 +103,7 @@ export function EthBlockDtoToJSON(value?: EthBlockDto | null): any {
         'number': value.number,
         'hash': value.hash,
         'parentHash': value.parentHash,
+        'timestamp': value.timestamp,
         'gasUsed': value.gasUsed,
         'transactions': value.transactions,
     };

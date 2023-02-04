@@ -60,10 +60,14 @@ export class EthListenerApi extends runtime.BaseAPI implements EthListenerApiInt
 
         const queryParameters: any = {};
 
+        if (requestParameters.id !== undefined) {
+            queryParameters['id'] = requestParameters.id;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/eth-listener/load-block`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/eth-listener/load-block`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

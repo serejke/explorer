@@ -48,6 +48,7 @@ export class EthWeb3Service {
       _id: block.hash,
       number: block.number.toString(),
       hash: block.hash,
+      timestamp: parseInt(block.timestamp.toString()) * 1000,
       parentHash: block.parentHash,
       gasUsed: block.gasUsed.toString(),
       transactions: ethTransactions.map((tx) => tx.hash)

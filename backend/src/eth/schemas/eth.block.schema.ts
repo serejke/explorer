@@ -22,6 +22,9 @@ export class EthBlock {
   hash: string;
 
   @Prop()
+  timestamp: number;
+
+  @Prop()
   parentHash: string;
 
   @Prop()

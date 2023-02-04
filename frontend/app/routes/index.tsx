@@ -1,6 +1,10 @@
 import { json } from '@remix-run/node';
 import { fetchBlocks } from '~/api/explorer.server';
 import { Link, useLoaderData } from '@remix-run/react';
+import BlocksPagination from '~/components/BlocksPagination';
+import classNames from 'classnames';
+import { DateTime } from 'luxon';
+import { Header } from '~/components/Header';
 
 const latestBlocksLimit = 50;
 
@@ -12,17 +16,33 @@ export async function loader() {
 export default function Index() {
   const { blocks } = useLoaderData<typeof loader>();
   return (
-    <div>
-      <p>Blocks</p>
-      {blocks.map((block) => (
-        <div key={block.hash}>
-          <p>Number</p>
-          <Link to={`/block/${block.number}`}>{block.number}</Link>
-
-          <p>Hash</p>
-          <Link to={`/block/${block.hash}`}>{block.hash}</Link>
+    <div className="mt-4">
+      <Header content='Blocks'/>
+      <div className="mx-auto max-w-7xl flex flex-col justify-between">
+        <div className="border border-grey-200 rounded-lg">
+          {blocks.map((block, index) => (
+            <Link
+              key={block.hash}
+              to={`/block/${block.number}`}
+              className={classNames('px-6', 'rounded-lg', 'py-4', 'flex', 'flex-row', 'justify-between', {
+                'bg-white': index % 2 === 0,
+                'bg-gray-50': index % 2 !== 1,
+              })}
+            >
+              <div className="w-12">
+                #{block.number}
+              </div>
+              <div className="text-sm text-gray-500 w-32">{
+                DateTime.fromMillis(block.timestamp).toRelative({ style: 'long', unit: ['days', 'hours', 'minutes'] })
+              }</div>
+              <div className="text-sm font-mono">{block.hash}</div>
+              <div
+                className="text-gray-500">{block.transactions.length} transaction{block.transactions.length > 1 ? 's' : ''}</div>
+            </Link>
+          ))}
         </div>
-      ))}
+      </div>
+      <BlocksPagination pageSize={10} totalResults={100} currentPage={1} />
     </div>
   );
 }

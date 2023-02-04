@@ -1,27 +1,11 @@
-import { Form } from '@remix-run/react';
+export type HeaderProps = {
+  content: string;
+}
 
-export function Header() {
-  return (
-    <header className='flex mx-auto'>
-      <img
-        width={75}
-        src={'/images/explorer_logo.jpeg'}
-        alt='Explorer'
-        title='Explorer'
-      />
-      <Form method="post" className="width-1/2">
-        <div>
-          <label>
-            <input
-              className="border-gray-200"
-              type="text"
-              // defaultValue={actionData?.fields?.name}
-              placeholder={'Search by Block Number/Hash or by Transaction Hash'}
-              name="search-string"
-            />
-          </label>
-        </div>
-      </Form>
-    </header>
-  );
+export function Header({ content }: HeaderProps) {
+  return <header className="">
+    <div className="mx-auto max-w-7xl py-6">
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900">{content}</h1>
+    </div>
+  </header>;
 }
