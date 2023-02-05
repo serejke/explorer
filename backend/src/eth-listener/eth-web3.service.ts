@@ -17,12 +17,15 @@ export class EthWeb3Service {
     this.web3 = new Web3(ethNodeRpcUrl);
   }
 
-  async loadBlock(blockNumber: number): Promise<{
+  async loadBlock(blockNumber: number): Promise<'pending' | {
     block: EthBlock,
     transactions: EthTransaction[]
   }> {
     this.logger.log(`Loading block #${blockNumber}`);
     const block = await this.web3.eth.getBlock(blockNumber, true);
+    if (!block.hash) {
+      return 'pending';
+    }
 
     const ethTransactions: EthTransaction[] = [];
     for (const transaction of block.transactions) {
