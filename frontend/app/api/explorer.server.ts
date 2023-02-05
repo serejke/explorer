@@ -67,11 +67,17 @@ export function isValidBlockNumber(string: string): boolean {
   return regexExp.test(string);
 }
 
-export async function searchTransactionOrBlock(searchString: string): Promise<SearchResult> {
+export async function searchTransactionOrBlock(searchString: any): Promise<SearchResult> {
+  if (typeof searchString !== 'string') {
+    return { type: 'invalidSearch' };
+  }
+
+  searchString = searchString.trim();
+
   if (isValidBlockNumber(searchString)) {
     const block = await fetchBlock(searchString);
     if (block === 'notFound') {
-      return 'notFound';
+      return { type: 'notFound' };
     }
     return {
       type: 'block',
@@ -96,8 +102,8 @@ export async function searchTransactionOrBlock(searchString: string): Promise<Se
       }
     }
 
-    return 'notFound';
+    return { type: 'notFound' };
   }
 
-  return 'invalidSearch';
+  return { type: 'invalidSearch' };
 }

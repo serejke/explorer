@@ -13,15 +13,16 @@ export const links: LinksFunction = () => {
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
   const searchString = form.get("search-string");
-  if (typeof searchString !== 'string') {
-    return json('Search string is missing', { status: 400 });
-  }
   const searchResult = await searchTransactionOrBlock(searchString);
-  if (searchResult === 'invalidSearch') {
-    return json('Search string is invalid', { status: 400 });
+  if (searchResult.type === 'invalidSearch') {
+    return json({
+      error: 'Invalid search string'
+    }, { status: 400 });
   }
-  if (searchResult === 'notFound') {
-    return json('Nothing found', { status: 404 });
+  if (searchResult.type === 'notFound') {
+    return json({
+      error: 'Nothing found'
+    }, { status: 404 });
   }
   if (searchResult.type === 'block') {
     return redirect(`/block/${searchResult.blockHash}`);

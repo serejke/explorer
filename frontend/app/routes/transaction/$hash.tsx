@@ -1,4 +1,4 @@
-import { json, LoaderArgs } from '@remix-run/node';
+import { json, LoaderArgs, redirect } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { Link, useCatch, useLoaderData } from '@remix-run/react';
 import { fetchTransaction } from '~/api/explorer.server';
@@ -10,7 +10,7 @@ export async function loader({ params }: LoaderArgs) {
   invariant(params.hash, "Transaction hash is not found");
   const transaction = await fetchTransaction(params.hash);
   if (transaction === 'notFound') {
-    throw new Response(params.hash, { status: 404 });
+    return redirect('/notFound', { statusText: `Transaction is not found by hash ${params.hash}`});
   }
   return json({ transaction });
 }
@@ -90,10 +90,5 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
 export function CatchBoundary() {
   const caught = useCatch();
-
-  if (caught.status === 404) {
-    return <div>Transaction {caught.data} is not found</div>;
-  }
-
   throw new Error(`Unexpected caught response with status: ${caught.status}`);
 }

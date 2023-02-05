@@ -1,6 +1,10 @@
 export type SearchResult =
-  'invalidSearch' | 'notFound'
+  {
+    type: 'invalidSearch',
+  }
   | {
+  type: 'notFound'
+} | {
   type: 'block',
   blockHash: string
 } | {
