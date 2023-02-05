@@ -5,9 +5,9 @@ import { fetchBlock, fetchTransactionsByBlockHash } from '~/api/explorer.server'
 import { Header } from '~/components/Header';
 import { DateTime } from 'luxon';
 import classNames from 'classnames';
-import { truncateHash } from '~/utils/truncate-hash';
 import { formatEth } from '~/utils/format-eth';
 import { formatGas } from '~/utils/format-gas';
+import { Hash } from '~/components/Hash';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.id, "Block ID is not found");
@@ -38,7 +38,9 @@ export default function BlockPage() {
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Block hash</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">{block.hash}</dd>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
+                <Hash hash={block.hash}/>
+              </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Timestamp</dt>
@@ -50,7 +52,7 @@ export default function BlockPage() {
               <dt className="text-sm font-medium text-gray-500">Parent block hash</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
                 <Link to={`../${block.parentHash}`} relative='path'>
-                  <div>{block.parentHash}</div>
+                  <Hash hash={block.parentHash}/>
                 </Link>
               </dd>
             </div>
@@ -76,11 +78,12 @@ export default function BlockPage() {
               <div className="w-1/8">
                 #{transaction.transactionIndex + 1}
               </div>
-              <div className="text-sm font-mono w-1/5">
-                {truncateHash(transaction.hash)}
+              <div className="w-1/5">
+                <Hash hash={transaction.hash} truncated/>
               </div>
-              <div className="text-sm font-mono w-2/5">
-                {truncateHash(transaction.from)} {'->'} {truncateHash(transaction.to)}
+              <div className="w-2/5">
+                <Hash hash={transaction.from} truncated/> {' -> '}
+                <Hash hash={transaction.to} truncated/>
               </div>
               <div className="w-1/5">
                 {formatEth(transaction.value)}

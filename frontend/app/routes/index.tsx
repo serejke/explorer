@@ -5,6 +5,7 @@ import BlocksPagination from '~/components/BlocksPagination';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import { Header } from '~/components/Header';
+import { Hash } from '~/components/Hash';
 
 const PAGE_SIZE = 10;
 
@@ -40,7 +41,7 @@ export default function Index() {
             <Link
               key={block.hash}
               to={`/block/${block.number}`}
-              className={classNames('px-6', 'rounded-lg', 'py-4', 'flex', 'flex-row', 'justify-between', {
+              className={classNames('px-6', 'rounded-lg', 'py-4', 'flex', 'flex-row', 'justify-between', 'items-center', {
                 'bg-white': index % 2 === 0,
                 'bg-gray-50': index % 2 !== 1,
               })}
@@ -51,7 +52,7 @@ export default function Index() {
               <div className="text-sm text-gray-500 w-32">{
                 DateTime.fromMillis(block.timestamp).toRelative({ style: 'long', unit: ['days', 'hours', 'minutes'] })
               }</div>
-              <div className="text-sm font-mono">{block.hash}</div>
+              <div className="text-sm font-mono"><Hash hash={block.hash}/></div>
               <div
                 className="text-gray-500">{block.transactions.length} transaction{block.transactions.length > 1 ? 's' : ''}</div>
             </Link>

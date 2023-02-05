@@ -5,6 +5,7 @@ import { fetchTransaction } from '~/api/explorer.server';
 import { Header } from '~/components/Header';
 import { formatEth } from '~/utils/format-eth';
 import { formatGas } from '~/utils/format-gas';
+import { Hash } from '~/components/Hash';
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.hash, "Transaction hash is not found");
@@ -39,7 +40,7 @@ export default function TransactionPage() {
               <dt className="text-sm font-medium text-gray-500">Block hash</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
                 <Link to={`../block/${transaction.blockHash}`}>
-                  <div>{transaction.blockHash}</div>
+                  <Hash hash={transaction.blockHash}/>
                 </Link>
               </dd>
             </div>
@@ -51,12 +52,14 @@ export default function TransactionPage() {
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">From</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">{transaction.from}</dd>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
+                <Hash hash={transaction.from}/>
+              </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">To</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-mono">
-                {transaction.to ? transaction.to : '0x0000000000000000000000000000000000000000'}
+                <Hash hash={transaction.to}/>
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
