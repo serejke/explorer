@@ -50,11 +50,11 @@ export default function Index() {
                 #{block.number}
               </div>
               <div className="text-sm text-gray-500 w-32">{
-                DateTime.fromMillis(block.timestamp).toRelative({ style: 'long', unit: ['days', 'hours', 'minutes'] })
+                DateTime.fromMillis(block.timestamp).toRelative({ style: 'long', unit: ['days', 'hours', 'minutes', 'seconds'] })
               }</div>
               <div className="text-sm font-mono"><Hash hash={block.hash}/></div>
               <div
-                className="text-gray-500">{block.transactions.length} transaction{block.transactions.length > 1 ? 's' : ''}</div>
+                className="text-gray-500 w-32">{block.transactions.length} transaction{block.transactions.length > 1 ? 's' : ''}</div>
             </Link>
           ))}
         </div>
