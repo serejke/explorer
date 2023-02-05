@@ -8,5 +8,5 @@ import { EthModule } from '../eth/eth.module';
   imports: [ConfigModule, EthModule],
   providers: [EthWeb3Service, EthLoaderService],
 })
-export class EthListenerModule {
+export class EthLoaderModule {
 }

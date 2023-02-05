@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EthListenerModule } from './eth-listener/eth-listener.module';
+import { EthLoaderModule } from './eth-loader/eth-loader.module';
 import { EthModule } from './eth/eth.module';
 import { ScheduleModule } from '@nestjs/schedule';
 
@@ -19,7 +19,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       inject: [ConfigService],
     }),
     EthModule,
-    EthListenerModule,
+    EthLoaderModule,
     ConfigModule.forRoot(),
     ScheduleModule.forRoot()
   ],
