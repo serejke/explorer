@@ -17,6 +17,10 @@ export class EthWeb3Service {
     this.web3 = new Web3(ethNodeRpcUrl);
   }
 
+  async getLastBlockNumber(): Promise<number> {
+    return parseInt((await this.web3.eth.getBlockNumber()).toString());
+  }
+
   async loadBlock(blockNumber: number): Promise<'pending' | {
     block: EthBlock,
     transactions: EthTransaction[]

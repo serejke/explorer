@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EthListenerModule } from './eth-listener/eth-listener.module';
 import { EthModule } from './eth/eth.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { EthModule } from './eth/eth.module';
     }),
     EthModule,
     EthListenerModule,
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
+    ScheduleModule.forRoot()
   ],
 })
 export class AppModule {

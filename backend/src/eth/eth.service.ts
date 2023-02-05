@@ -31,17 +31,22 @@ export class EthService {
 
   async getBlockchainStatus(): Promise<BlockchainStatusDto> {
     const blocks = await this.ethBlockModel.count();
-    const latestBlock = await this.ethBlockModel
+    const latestBlock = await this.findLastBlock();
+    return {
+      blocks,
+      latestBlock: latestBlock?.number
+    };
+  }
+
+  async findLastBlock(): Promise<EthBlock | undefined> {
+    const lastBlock = await this.ethBlockModel
       .find()
       .sort({
         'number': -1
       })
       .limit(1)
       .exec();
-    return {
-      blocks,
-      latestBlock: latestBlock && latestBlock.length > 0 ? latestBlock[0].number : undefined
-    };
+    return lastBlock && lastBlock.length > 0 ? lastBlock[0] : undefined;
   }
 
   async findBlocksFrom(from: number, limit: number): Promise<EthBlock[]> {
@@ -57,11 +62,11 @@ export class EthService {
       .limit(limit)
       .exec();
   }
-  async findOneBlock(id: string): Promise<EthBlock> {
-    if (id.startsWith('0x')) {
-      return this.ethBlockModel.findOne({ _id: id }).exec();
+  async findOneBlock(hashOrNumber: string | number): Promise<EthBlock | null> {
+    if (typeof hashOrNumber === 'string') {
+      return this.ethBlockModel.findOne({ _id: hashOrNumber }).exec();
     }
-    return this.ethBlockModel.findOne({ number: id }).exec();
+    return this.ethBlockModel.findOne({ number: hashOrNumber }).exec();
   }
 
   async findOneTransaction(transactionHash: string): Promise<EthTransaction> {
@@ -70,11 +75,23 @@ export class EthService {
 
   async findTransactionsByBlockHash(blockHash: string): Promise<EthTransaction[]> {
     return this.ethTransactionModel
-      .find({ blockHash: blockHash })
+      .find({ blockHash })
       .sort({
         'transactionIndex': 1
       })
       .exec();
+  }
+
+  async removeBlockByHash(blockHash: string) {
+    await this.ethBlockModel.remove({
+      _id: blockHash
+    }).exec();
+  }
+
+  async removeTransactionsByBlockHash(blockHash: string) {
+    await this.ethTransactionModel.remove({
+      blockHash
+    }).exec()
   }
 }
 

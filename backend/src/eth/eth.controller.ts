@@ -37,7 +37,8 @@ export class EthController {
   @Get('/block/:id')
   @ApiNotFoundResponse({ description: 'Block having the given ID is not found' })
   async findOneBlock(@Param('id') id: string): Promise<EthBlockDto> {
-    const block = await this.ethModelService.findOneBlock(id);
+    const hashOrNumber = id.startsWith('0x') ? id : parseInt(id);
+    const block = await this.ethModelService.findOneBlock(hashOrNumber);
     if (!block) {
       throw new NotFoundException();
     }
