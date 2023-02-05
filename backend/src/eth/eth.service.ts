@@ -40,7 +40,7 @@ export class EthService {
       .exec();
     return {
       blocks,
-      latestBlock: latestBlock ? latestBlock[0].number : undefined
+      latestBlock: latestBlock && latestBlock.length > 0 ? latestBlock[0].number : undefined
     };
   }
 

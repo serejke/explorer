@@ -66,7 +66,7 @@ export interface EthTransactionDto {
      * @type {string}
      * @memberof EthTransactionDto
      */
-    data: string;
+    input: string;
     /**
      * 
      * @type {string}
@@ -93,7 +93,7 @@ export function instanceOfEthTransactionDto(value: object): boolean {
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
     isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "input" in value;
     isInstance = isInstance && "gas" in value;
     isInstance = isInstance && "gasPrice" in value;
 
@@ -117,7 +117,7 @@ export function EthTransactionDtoFromJSONTyped(json: any, ignoreDiscriminator: b
         'from': json['from'],
         'to': json['to'],
         'value': json['value'],
-        'data': json['data'],
+        'input': json['input'],
         'gas': json['gas'],
         'gasPrice': json['gasPrice'],
     };
@@ -139,7 +139,7 @@ export function EthTransactionDtoToJSON(value?: EthTransactionDto | null): any {
         'from': value.from,
         'to': value.to,
         'value': value.value,
-        'data': value.data,
+        'input': value.input,
         'gas': value.gas,
         'gasPrice': value.gasPrice,
     };

@@ -41,7 +41,7 @@ export class EthWeb3Service {
         from: transaction.from,
         to: transaction.to ? transaction.to : '0x0000000000000000000000000000000000000000',
         value: transaction.value.toString(),
-        data: transaction.data,
+        input: transaction.input,
         gas: transaction.gas.toString(),
         gasPrice: transaction.gasPrice.toString(),
       }

@@ -37,7 +37,7 @@ export class EthTransaction {
   value: BigIntString;
 
   @Prop()
-  data: string;
+  input: string;
 
   @Prop()
   gas: BigIntString;

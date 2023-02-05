@@ -13,7 +13,7 @@ export class EthTransactionDto {
 
   value: string;
 
-  data: string;
+  input: string;
 
   gas: string;
 

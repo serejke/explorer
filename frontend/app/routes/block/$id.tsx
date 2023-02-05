@@ -73,7 +73,7 @@ export default function BlockPage() {
                 'bg-gray-50': index % 2 !== 1,
               })}
             >
-              <div className="w-1/5">
+              <div className="w-1/8">
                 #{transaction.transactionIndex + 1}
               </div>
               <div className="text-sm font-mono w-1/5">

@@ -58,12 +58,13 @@ export default function Index() {
           ))}
         </div>
       </div>
-      <BlocksPagination
+      {blockchainStatus.blocks === 0 && <Header content='No blocks are indexed yet'/>}
+      {blockchainStatus.blocks > 0 && <BlocksPagination
         pageSize={PAGE_SIZE}
         totalBlocks={blockchainStatus.blocks}
         pageNumber={pageNumber}
         totalPages={Math.floor((blockchainStatus.blocks - 1) / PAGE_SIZE) + 1}
-      />
+      />}
     </div>
   );
 }
