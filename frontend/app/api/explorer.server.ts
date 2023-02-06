@@ -9,7 +9,7 @@ import {
 import { SearchResult } from '~/types/search-result';
 
 const configuration = new Configuration({
-  basePath: 'http://localhost:3000',
+  basePath: process.env.BACKEND_URL,
 });
 
 const explorerApi = new EthApi(configuration);

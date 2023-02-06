@@ -1,0 +1,19 @@
+### GET block by number
+GET http://localhost:3001/eth/block/3
+Accept: application/json
+
+### GET block by hash
+GET http://localhost:3001/eth/block/0x7aa5c12da3b9783c9cd9d84502b700e5313d4a9a67180174c607fba6fddeb6b1
+Accept: application/json
+
+### GET blocks
+GET http://localhost:3001/eth/blocks?from=5&limit=10
+Accept: application/json
+
+### Get status
+GET http://localhost:3001/eth/status
+Accept: application/json
+
+### GET transaction by hash
+GET http://localhost:3001/eth/transaction/0xd93596ae5f20bc0ae18e60c321fd395afdc9c9f654ee245452b5939167f69f84
+Accept: application/json

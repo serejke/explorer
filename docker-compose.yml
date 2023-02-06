@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGODB_DATABASE="explorer"
+    ports:
+      - "27017:27017"
+    volumes:
+      - .volumes:/data/db
+    networks:
+      - explorer-network
+
+  backend:
+    depends_on: [mongodb]
+    container_name: backend
+    build:
+      context: ./backend
+    environment:
+      - MONGODB_URI=mongodb://mongodb/explorer
+      - ETH_NODE_RPC_URL=https://intensive-cold-research.discover.quiknode.pro/3fb04196e900d12fa4eb4d6b3f4637186b324ff7
+      # How many blocks to load backwards from the last node's block; If 0, will load all blocks down to the genesis block.
+      - ETH_LAST_BLOCKS_COUNT=300
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    networks:
+      - explorer-network
+
+  frontend:
+    depends_on: [backend]
+    build:
+      context: ./frontend
+    container_name: frontend
+    environment:
+      - BACKEND_URL=http://backend:3001
+    ports:
+      - "3000:3000"
+    networks:
+      - explorer-network
+
+networks:
+  explorer-network: { }

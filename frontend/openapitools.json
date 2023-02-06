@@ -7,7 +7,7 @@
       "explorer-api-generator": {
         "generatorName": "typescript-fetch",
         "output": "generated-sources/openapi",
-        "inputSpec": "http://localhost:3000/swagger-json",
+        "inputSpec": "http://localhost:3001/swagger-json",
         "additionalProperties": {
           "npmName": "explorer-client",
           "supportsES6": true,
