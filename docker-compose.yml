@@ -1,4 +1,4 @@
-version: "3"
+version: "3.6"
 
 services:
   mongodb:
@@ -27,6 +27,12 @@ services:
       - "3001:3001"
     networks:
       - explorer-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3001/eth/status" ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
 
   frontend:
     depends_on: [backend]
