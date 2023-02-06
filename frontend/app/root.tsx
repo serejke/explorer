@@ -5,6 +5,7 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, } from "@r
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { searchTransactionOrBlock } from '~/api/explorer.server';
 import NavBar from '~/components/NavBar';
+import { Header } from '~/components/Header';
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -36,11 +37,20 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-export async function loader({ }: LoaderArgs) {
-  return json({ });
+export async function loader({}: LoaderArgs) {
+  return json({});
 }
 
 export default function App() {
+  return <AppLayout />;
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  console.error(error);
+  return <AppLayout error={error.message}/>
+}
+
+function AppLayout({ error }: { error?: string }) {
   return (
     <html lang="en" className="h-full bg-gray-100">
     <head title="Explorer">
@@ -51,12 +61,18 @@ export default function App() {
     <body className="h-full">
     <NavBar />
     <main>
-      <Outlet />
+      {!error && <Outlet/>}
+      {error && (
+        <div className="mt-4">
+          <Header content='Unexpected error'/>
+          <div className="mx-auto max-w-7xl">Apparently, the backend is not available: {error}</div>
+        </div>
+      )}
     </main>
     <ScrollRestoration />
     <Scripts />
     <LiveReload />
     </body>
     </html>
-  );
+  )
 }
