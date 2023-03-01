@@ -32,7 +32,7 @@ export class EthWeb3Service {
     }
 
     const ethTransactions: EthTransaction[] = [];
-    for (const transaction of block.transactions) {
+    for (const transaction of block.transactions ?? []) {
       if (typeof transaction === 'string') {
         throw new Error('Tx must be hydrated');
       }

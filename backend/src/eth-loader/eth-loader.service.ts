@@ -38,7 +38,7 @@ export class EthLoaderService {
     this.logger.log(`Loading last blocks`);
     const lastBlockNumber = await this.ethWeb3Service.getLastBlockNumber();
 
-    const fromBlock = this.lastBlocksCount === 0 ? 0 : lastBlockNumber - this.lastBlocksCount;
+    const fromBlock = this.lastBlocksCount === 0 ? 0 : Math.max(0, lastBlockNumber - this.lastBlocksCount);
     for (let blockNumber = lastBlockNumber; blockNumber >= fromBlock; blockNumber--) {
       const loadedBlock = await this.ethWeb3Service.loadBlock(blockNumber);
       if (loadedBlock === 'pending') {
